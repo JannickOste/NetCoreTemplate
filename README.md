@@ -1,9 +1,5 @@
 # .NET Template (Unfinished Project)
 
-**Author:** Oste Jannick  
-**Description:** This is the startup configuration where all your dependencies' configuration and injection occur.  
-**Start-Date:** 2023-09-11
-
 ## Table of Contents
 
 - [Introduction](#introduction)
