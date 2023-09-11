@@ -1,4 +1,4 @@
-using System.Collections.Immutable;
+using NetCore.Domain.Models.User;
 
 namespace NetCore.Domain.ViewModels.User;
 

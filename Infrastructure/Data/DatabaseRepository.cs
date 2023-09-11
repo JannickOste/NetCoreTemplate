@@ -1,3 +1,4 @@
+using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using NetCore.Domain.Data;
@@ -28,9 +29,16 @@ public class DatabaseRepository<TEntity> : IDatabaseRepository<TEntity> where TE
         return this.entities.ToList();
     }
 
-    public TEntity GetById(int id)
+    public TEntity? GetById(int id)
     {
-        return this.entities.Find(id);
+        PropertyInfo? idProperty = typeof(TEntity).GetProperty("Id");
+        
+        if (idProperty is null)
+        {
+            throw new ArgumentNullException(nameof(idProperty));
+        }
+
+        return this.entities.SingleOrDefault(e => (int?)idProperty.GetValue(e) == id);
     }
 
     public void Update(TEntity entity)

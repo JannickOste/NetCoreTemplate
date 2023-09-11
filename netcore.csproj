@@ -20,6 +20,7 @@
     <Folder Include="Controllers/" />
     <Folder Include="Domain/" />
     <Folder Include="Domain/Data/" />
+    <Folder Include="Domain/Models/User/" />
     <Folder Include="Domain/ViewModels/User/" />
     <Folder Include="Infrastructure/" />
     <Folder Include="Infrastructure/Authorization/" />

@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using NetCore.Domain.Data;
-using NetCore.Domain.Models;
+using NetCore.Domain.Models.User;
 using NetCore.Domain.ViewModels;
 using NetCore.Domain.ViewModels.Default;
 using NetCore.Domain.ViewModels.User;
@@ -99,11 +99,19 @@ public class UserController : Controller
     {
         try
         {
+            User? target = this.repository.GetById(id);
+            if(target is null)
+            {
+                return BadRequest(new ErrorViewModel()
+                {
+                    Error = "User not found"
+                });
+            }
+
             return Ok(new UserDetailViewModel()
             {
-                User = this.repository.GetById(id)
+                User = target
             });
-
         }
         catch (Exception ex)
         {
@@ -139,7 +147,7 @@ public class UserController : Controller
     {
         try
         {
-            User target = this.repository.GetById(id);
+            User? target = this.repository.GetById(id);
             if (target is null)
             {
                 return BadRequest(new ErrorViewModel()

@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using NetCore.Domain.Models;
-using Pomelo.EntityFrameworkCore.MySql.Infrastructure.Internal;
+using NetCore.Domain.Models.User;
 
 namespace NetCore.Infrastructure.Data;
 
