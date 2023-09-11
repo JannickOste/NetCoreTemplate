@@ -1,5 +1,4 @@
-# .net template 
-(project unfinished)
+# .NET Template (Unfinished Project)
 
 **Author:** Oste Jannick  
 **Description:** This is the startup configuration where all your dependencies' configuration and injection occur.  
@@ -12,36 +11,55 @@
 - [Configuration](#configuration)
 - [Database Repository](#database-repository)
 - [User Model](#user-model)
+- [Mapper Generation](#mapper-generation)
+  - [Entity Mappers](#entity-mappers)
 
 ## Introduction
 
-This repository contains the startup configuration for the `netcore` project. It includes dependency configuration and injection, database repository implementation, and a user model.
+Welcome to the `netcore` project's startup configuration repository. This repository focuses on simplifying the setup of dependency configurations, injection, database repository management, and entity model mapping.
 
 ## Dependencies
 
 ### Entity Framework Core
 
-This project utilizes Entity Framework Core for database operations. The `DatabaseContext` class handles database interactions.
+The project leverages Entity Framework Core to facilitate database operations. The `DatabaseContext` class serves as the central hub for managing interactions with the database.
 
 ### Repository Pattern
 
-Lazy repository injection is employed for all entities marked with the `RepositoryTarget` attribute. This allows for dynamic repository creation.
+Efficiency and flexibility are key in this project. The repository pattern is implemented with lazy repository injection, allowing for the dynamic creation of repositories for all entities marked with the `RepositoryTarget` attribute.
 
 ## Configuration
 
-The `Startup` class is where dependency injection and configuration occur. Here's a brief overview:
+The heart of the project lies within the `Startup` class. Here, you'll find the essential configurations:
 
-- Database context (`DatabaseContext`) is added to services.
-- Repositories for all entity types with the `RepositoryTarget` attribute are injected lazily.
-- Controllers and Swagger API documentation are initialized.
+- **Database Context**: The `DatabaseContext` is added to the services, providing a centralized mechanism for database interactions.
+
+- **Lazy Repository Injection**: Repositories for entity types with the `RepositoryTarget` attribute are injected on-demand, reducing the need for repetitive manual setup.
+
+- **Controller Initialization**: Controllers and Swagger API documentation are initialized, ensuring seamless integration with the project.
 
 ## Database Repository
 
-The `DatabaseRepository<TEntity>` class implements the `IDatabaseRepository<TEntity>` interface for basic database operations on entities. It includes methods for inserting, retrieving, updating, and deleting entities.
+For efficient database operations on entities, the `DatabaseRepository<TEntity>` class implements the `IDatabaseRepository<TEntity>` interface. This class offers essential methods for entity management, including insertion, retrieval, updating, and deletion.
 
 ## User Model
 
-The `User` class represents a user entity. It includes properties such as username, name, email, user scope, date of birth, and email confirmation status. The `RepositoryTarget` attribute marks it for inclusion in the repository pattern.
+The `User` class represents a fundamental entity within the project. It encapsulates essential user-related properties, such as username, name, email, user scope, date of birth, and email confirmation status. The `RepositoryTarget` attribute designates it for integration with the repository pattern.
 
+## Mapper Generation
+
+To further streamline data mapping between various models, a dynamic mapper generation feature is included. This feature automatically generates mappers for mapping data from input models to entity models, simplifying the data transformation process.
+
+### Entity Mappers
+
+- **EntityCreateViewMapTargetAttribute**: This attribute is used to specify the target type for automatic create mapper generation. Apply this attribute to your destination model (entity) classes to streamline the mapping process.
+
+- **EntityUpdateViewMapTargetAttribute**: Similar to the create mapper attribute, this attribute is used for automatic update mapper generation. It simplifies the mapping of updates from view models to entities.
+
+- **IEntityCreateMapper\<Source, Destination\>**: An interface for creating mappers that map data from source models to destination models. It allows for custom mapping logic.
+
+- **IEntityUpdateMapper\<Source, Destination\>**: An interface for creating mappers that map update data from source models to destination models. It supports custom mapping logic and updating only non-null properties.
+
+Explore the project's configurations, repository patterns, and data mapping capabilities to build efficient and scalable .NET applications.
 
 (Readme is not done yet, temporary eod commit)
