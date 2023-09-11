@@ -12,7 +12,7 @@ public class UserCreateViewModel
     public string Username { get; set; } = String.Empty;
 
     [Required]
-    [RegularExpression("[a-z]+ [a-z]+")]
+    [RegularExpression("^[a-z]+( [a-z]+){1,4}$")]
     public string Name { get; set; } = String.Empty;
 
     [Required]
