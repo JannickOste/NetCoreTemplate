@@ -31,14 +31,8 @@ public class DatabaseRepository<TEntity> : IDatabaseRepository<TEntity> where TE
 
     public TEntity? GetById(int id)
     {
-        PropertyInfo? idProperty = typeof(TEntity).GetProperty("Id");
-        
-        if (idProperty is null)
-        {
-            throw new ArgumentNullException(nameof(idProperty));
-        }
-
-        return this.entities.SingleOrDefault(e => (int?)idProperty.GetValue(e) == id);
+        //!TODO: need to look into for dynamic fetch
+        return this.entities.Find(id);
     }
 
     public void Update(TEntity entity)

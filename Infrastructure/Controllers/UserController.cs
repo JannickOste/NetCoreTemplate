@@ -4,6 +4,7 @@ using NetCore.Domain.Models.User;
 using NetCore.Domain.ViewModels;
 using NetCore.Domain.ViewModels.Default;
 using NetCore.Domain.ViewModels.User;
+using NetCore.Infrastructure.Mapper;
 using NetCore.Infrastructure.Mapper.User;
 
 namespace NetCore.Infrastructure.Controllers;
@@ -100,7 +101,7 @@ public class UserController : Controller
         try
         {
             User? target = this.repository.GetById(id);
-            if(target is null)
+            if (target is null)
             {
                 return BadRequest(new ErrorViewModel()
                 {
@@ -123,15 +124,34 @@ public class UserController : Controller
     /// Update a specific user.
     /// </summary>
     /// <response code="200">The newly updated user.</response> 
-    /// <response code="400">Some required fields where missing / invalid </response> 
+    /// <response code="400">Some required fields where missing / invalid or the user wasn't found</response> 
     /// <response code="500">An error occured when updating the user</response> 
     [HttpPut("{id}")]
     [ProducesResponseType(typeof(UserDetailViewModel), 200)]
     [ProducesResponseType(typeof(ErrorViewModel), 400)]
     [ProducesResponseType(typeof(ProblemDetails), 500)]
-    public ActionResult Update(int id)
+    public ActionResult Update(int id, [FromBody] UserUpdateViewModel userUpdateViewModel)
     {
-        return Ok(id);
+        User? user = this.repository.GetById(id);
+        if (user is null)
+        {
+            return BadRequest(new ErrorViewModel()
+            {
+                Error = "User not found"
+            });
+        }
+
+        if(!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        User updatedUser = UserUpdateToUserMapper.Map(user, userUpdateViewModel);
+        this.repository.Update(updatedUser);
+
+        return Ok(new UserDetailViewModel(){
+            User = updatedUser
+        });
     }
 
     /// <summary>
