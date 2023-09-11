@@ -29,7 +29,7 @@ public class Startup
             services.AddScoped(interfaceType, repositoryType);
         }
 
-        ///!TODO: Look for way to generalize this, possible for loop ?
+        ///!TODO: Look for way to generalize this, possible for loop with an interface that the attributes implement ?
         // Lazy Create ViewModel mapper generation
         foreach(Type createMapperDestinationType in assemblyTypes.Where(t => t.GetCustomAttribute<EntityCreateViewMapTargetAttribute>() is not null))
         {
