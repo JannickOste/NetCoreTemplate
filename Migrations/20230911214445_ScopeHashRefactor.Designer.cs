@@ -12,7 +12,7 @@ namespace netcore.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
     [Migration("20230911214445_ScopeRefactor")]
-    partial class ScopeRefactor
+    partial class ScopeHashRefactor
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
