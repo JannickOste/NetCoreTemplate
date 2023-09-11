@@ -1,5 +1,5 @@
 using AutoMapper;
-using NetCore.Domain.ViewModels;
+using NetCore.Domain.ViewModels.User;
 
 namespace NetCore.Infrastructure.Mapper.User; 
 

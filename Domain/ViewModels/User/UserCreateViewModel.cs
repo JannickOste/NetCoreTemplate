@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using NetCore.Infrastructure.Authorization;
 
-namespace NetCore.Domain.ViewModels;
+namespace NetCore.Domain.ViewModels.User;
 
 
 public class UserCreateViewModel 

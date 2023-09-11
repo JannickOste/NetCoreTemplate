@@ -7,9 +7,6 @@
       "sslPort": 44380
     }
   },
-  "ConnectionStrings": {
-    "DefaultConnection": "server=localhost;database=api;user=root;password="
-   },
   "profiles": {
     "http": {
       "commandName": "Project",

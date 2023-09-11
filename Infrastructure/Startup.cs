@@ -1,7 +1,5 @@
 using System.Reflection;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using NetCore.Domain.Data;
-using NetCore.Domain.Models;
 using NetCore.Infrastructure.Data;
 
 namespace NetCore.Infrastructure;
@@ -17,13 +15,13 @@ public class Startup
         IServiceCollection services
     )
     {
-        // Lazy repository injection, all entities with RepositoryTarget attribute.
+        // Lazy repository inject, all entities with RepositoryTarget attribute.
         services.AddDbContext<DatabaseContext>();
-        IEnumerable<System.Type> entityTypes = Assembly.GetExecutingAssembly().GetTypes().Where(
+        IEnumerable<Type> entityTypes = Assembly.GetExecutingAssembly().GetTypes().Where(
             t => t.GetCustomAttribute<RepositoryTargetAttribute>() is not null
         );
 
-        foreach(System.Type entityType in entityTypes)
+        foreach(Type entityType in entityTypes)
         {
             Type interfaceType = typeof(IDatabaseRepository<>).MakeGenericType(entityType);
             Type repositoryType = typeof(DatabaseRepository<>).MakeGenericType(entityType);

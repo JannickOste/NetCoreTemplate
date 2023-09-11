@@ -9,7 +9,7 @@ public class DatabaseContext : DbContext
     private readonly IConfiguration configuration;
     private readonly IWebHostEnvironment enviroment;
 
-    public DatabaseContext(DbContextOptions options, IConfiguration configuration, IWebHostEnvironment enviroment) : base(options)
+    public DatabaseContext(DbContextOptions<DatabaseContext> options, IConfiguration configuration, IWebHostEnvironment enviroment) : base(options)
     {
         this.configuration = configuration;
         this.enviroment = enviroment;
@@ -20,7 +20,7 @@ public class DatabaseContext : DbContext
     {
         if(!optionsBuilder.IsConfigured)
         {
-            string? connectionString = "server=localhost;database=api;user=root;password=12345";
+            string? connectionString = this.configuration.GetConnectionString(this.enviroment.EnvironmentName);
 
             if(connectionString is null)
             {

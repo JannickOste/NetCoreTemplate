@@ -1,6 +1,6 @@
 using NetCore.Domain.Models.User;
 
-namespace NetCore.Domain.ViewModels;
+namespace NetCore.Domain.ViewModels.User;
 
 
 class UserDetailViewModel {
