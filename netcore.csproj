@@ -24,7 +24,7 @@
     <Folder Include="Infrastructure/Authorization/" />
     <Folder Include="Infrastructure/Data/" />
     <Folder Include="Infrastructure/Mappers/" />
-    <Folder Include="Infrastructure/Mappers/User/" />
+    <Folder Include="Infrastructure/Mappers/ViewModels/" />
   </ItemGroup>
 
 </Project>

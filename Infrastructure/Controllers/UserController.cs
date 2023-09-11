@@ -1,11 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using NetCore.Domain.Data;
+using NetCore.Domain.Mappers.ViewModels;
 using NetCore.Domain.Models.User;
-using NetCore.Domain.ViewModels;
 using NetCore.Domain.ViewModels.Default;
 using NetCore.Domain.ViewModels.User;
-using NetCore.Infrastructure.Mapper;
-using NetCore.Infrastructure.Mapper.User;
+using NetCore.Infrastructure.Mappers.ViewModels;
 
 namespace NetCore.Infrastructure.Controllers;
 
@@ -18,11 +17,19 @@ namespace NetCore.Infrastructure.Controllers;
 public class UserController : Controller
 {
     private readonly IDatabaseRepository<User> repository;
+
+    private readonly IEntityCreateMapper<UserCreateViewModel, User> createMapper;
+    private readonly IEntityUpdateMapper<UserUpdateViewModel, User> updateMapper;
+
     public UserController(
-        IDatabaseRepository<User> repository
+        IDatabaseRepository<User> repository,
+        IEntityCreateMapper<UserCreateViewModel, User>  createMapper,
+        IEntityUpdateMapper<UserUpdateViewModel, User>  updateMapper
     )
     {
         this.repository = repository;
+        this.createMapper = createMapper;
+        this.updateMapper = updateMapper;
     }
 
     /// <summary>
@@ -46,7 +53,7 @@ public class UserController : Controller
         try
         {
             User user = this.repository.Insert(
-                UserCreateToUserMapper.Map(userCreateViewModel)
+                this.createMapper.Map(userCreateViewModel)
             );
 
             return Ok(new UserDetailViewModel()
@@ -146,7 +153,7 @@ public class UserController : Controller
             return BadRequest(ModelState);
         }
 
-        User updatedUser = UserUpdateToUserMapper.Map(user, userUpdateViewModel);
+        User updatedUser = this.updateMapper.Map(user, userUpdateViewModel);
         this.repository.Update(updatedUser);
 
         return Ok(new UserDetailViewModel(){
@@ -183,6 +190,5 @@ public class UserController : Controller
         {
             return Problem(ex.Message);
         }
-
     }
 }

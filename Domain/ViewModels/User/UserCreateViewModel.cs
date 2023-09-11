@@ -1,9 +1,10 @@
 using System.ComponentModel.DataAnnotations;
+using NetCore.Domain.Mappers.ViewModels;
 using NetCore.Infrastructure.Authorization;
 
 namespace NetCore.Domain.ViewModels.User;
 
-
+[EntityCreateViewMapTarget(typeof(NetCore.Domain.Models.User.User))]
 public class UserCreateViewModel 
 {
     [Required]

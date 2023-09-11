@@ -1,6 +1,8 @@
 using System.Reflection;
 using NetCore.Domain.Data;
+using NetCore.Domain.Mappers.ViewModels;
 using NetCore.Infrastructure.Data;
+using NetCore.Infrastructure.Mappers.ViewModels;
 
 namespace NetCore.Infrastructure;
 
@@ -15,19 +17,47 @@ public class Startup
         IServiceCollection services
     )
     {
+        System.Type[] assemblyTypes = Assembly.GetExecutingAssembly().GetTypes();
+
         // Lazy repository inject, all entities with RepositoryTarget attribute.
         services.AddDbContext<DatabaseContext>();
-        IEnumerable<Type> entityTypes = Assembly.GetExecutingAssembly().GetTypes().Where(
-            t => t.GetCustomAttribute<RepositoryTargetAttribute>() is not null
-        );
-
-        foreach(Type entityType in entityTypes)
+        foreach(Type entityType in assemblyTypes.Where(t => t.GetCustomAttribute<RepositoryTargetAttribute>() is not null))
         {
             Type interfaceType = typeof(IDatabaseRepository<>).MakeGenericType(entityType);
             Type repositoryType = typeof(DatabaseRepository<>).MakeGenericType(entityType);
 
             services.AddScoped(interfaceType, repositoryType);
         }
+
+        ///!TODO: Look for way to generalize this, possible for loop ?
+        // Lazy Create ViewModel mapper generation
+        foreach(Type createMapperDestinationType in assemblyTypes.Where(t => t.GetCustomAttribute<EntityCreateViewMapTargetAttribute>() is not null))
+        {
+            EntityCreateViewMapTargetAttribute? targetAttr = createMapperDestinationType.GetCustomAttribute<EntityCreateViewMapTargetAttribute>();
+
+            if(targetAttr is not null)
+            {
+                Type interfaceType = typeof(IEntityCreateMapper<,>).MakeGenericType(createMapperDestinationType, targetAttr.MapToType);
+                Type createMapperType = typeof(EntityCreateMapper<,>).MakeGenericType(createMapperDestinationType, targetAttr.MapToType);
+
+                services.AddSingleton(interfaceType, createMapperType);
+            }
+        }
+
+        // Lazy Update ViewModel mapper generation
+        foreach(Type updateMapperDestinationType in assemblyTypes.Where(t => t.GetCustomAttribute<EntityUpdateViewMapTargetAttribute>() is not null))
+        {
+            EntityUpdateViewMapTargetAttribute? targetAttr = updateMapperDestinationType.GetCustomAttribute<EntityUpdateViewMapTargetAttribute>();
+
+            if(targetAttr is not null)
+            {
+                Type interfaceType = typeof(IEntityUpdateMapper<,>).MakeGenericType(updateMapperDestinationType, targetAttr.MapToType);
+                Type updateMapperType = typeof(EntityUpdateMapper<,>).MakeGenericType(updateMapperDestinationType, targetAttr.MapToType);
+
+                services.AddSingleton(interfaceType, updateMapperType);
+            }
+        }
+
 
         // Controller / Service initialization
         services.AddControllers();

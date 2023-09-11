@@ -1,7 +1,9 @@
 using System.ComponentModel.DataAnnotations;
+using NetCore.Domain.Mappers.ViewModels;
 
 namespace NetCore.Domain.ViewModels.User;
 
+[EntityUpdateViewMapTarget(typeof(NetCore.Domain.Models.User.User))]
 public class UserUpdateViewModel
 {
     [MinLength(4)]
