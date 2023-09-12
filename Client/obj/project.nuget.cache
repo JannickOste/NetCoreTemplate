@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "+Ct+rZCu3y4Cj5vumPvrE20RdZkMln+I0kcpUAK7T5vIpFfdu5yak+bL09Nv9kE8xZlwnppxqEZ3RtoK6ksv9Q==",
+  "success": true,
+  "projectFilePath": "/home/jannick/Workspace/C#/netcore/Client/Client.csproj",
+  "expectedPackageFiles": [
+    "/home/jannick/.nuget/packages/identitymodel/6.2.0/identitymodel.6.2.0.nupkg.sha512",
+    "/home/jannick/.nuget/packages/microsoft.aspnetcore.app.ref/7.0.10/microsoft.aspnetcore.app.ref.7.0.10.nupkg.sha512"
+  ],
+  "logs": []
+}

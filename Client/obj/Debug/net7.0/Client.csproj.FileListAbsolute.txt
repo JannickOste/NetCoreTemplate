@@ -1,0 +1,17 @@
+/home/jannick/Workspace/C#/netcore/Client/bin/Debug/net7.0/Client
+/home/jannick/Workspace/C#/netcore/Client/bin/Debug/net7.0/Client.deps.json
+/home/jannick/Workspace/C#/netcore/Client/bin/Debug/net7.0/Client.runtimeconfig.json
+/home/jannick/Workspace/C#/netcore/Client/bin/Debug/net7.0/Client.dll
+/home/jannick/Workspace/C#/netcore/Client/bin/Debug/net7.0/Client.pdb
+/home/jannick/Workspace/C#/netcore/Client/bin/Debug/net7.0/IdentityModel.dll
+/home/jannick/Workspace/C#/netcore/Client/obj/Debug/net7.0/Client.csproj.AssemblyReference.cache
+/home/jannick/Workspace/C#/netcore/Client/obj/Debug/net7.0/Client.GeneratedMSBuildEditorConfig.editorconfig
+/home/jannick/Workspace/C#/netcore/Client/obj/Debug/net7.0/Client.AssemblyInfoInputs.cache
+/home/jannick/Workspace/C#/netcore/Client/obj/Debug/net7.0/Client.AssemblyInfo.cs
+/home/jannick/Workspace/C#/netcore/Client/obj/Debug/net7.0/Client.csproj.CoreCompileInputs.cache
+/home/jannick/Workspace/C#/netcore/Client/obj/Debug/net7.0/Client.csproj.CopyComplete
+/home/jannick/Workspace/C#/netcore/Client/obj/Debug/net7.0/Client.dll
+/home/jannick/Workspace/C#/netcore/Client/obj/Debug/net7.0/refint/Client.dll
+/home/jannick/Workspace/C#/netcore/Client/obj/Debug/net7.0/Client.pdb
+/home/jannick/Workspace/C#/netcore/Client/obj/Debug/net7.0/Client.genruntimeconfig.cache
+/home/jannick/Workspace/C#/netcore/Client/obj/Debug/net7.0/ref/Client.dll
