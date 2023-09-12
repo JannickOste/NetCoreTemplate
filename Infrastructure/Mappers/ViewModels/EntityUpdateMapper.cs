@@ -12,7 +12,7 @@ public class EntityUpdateMapper<Source, Destination> : IEntityUpdateMapper<Sourc
           )
       )
   ));
-    public virtual Destination Map(
+    public Destination Map(
         Destination original,
         Source viewModel
     ) => mapper.Map(viewModel, original);

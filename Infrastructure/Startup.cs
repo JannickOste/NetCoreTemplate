@@ -1,5 +1,6 @@
 using System.Reflection;
 using NetCore.Domain.Data;
+using NetCore.Domain.Mappers;
 using NetCore.Domain.Mappers.ViewModels;
 using NetCore.Infrastructure.Data;
 using NetCore.Infrastructure.Mappers.ViewModels;
@@ -21,7 +22,7 @@ public class Startup
 
         // Lazy repository inject, all entities with RepositoryTarget attribute.
         services.AddDbContext<DatabaseContext>();
-        foreach(Type entityType in assemblyTypes.Where(t => t.GetCustomAttribute<RepositoryTargetAttribute>() is not null))
+        foreach (Type entityType in assemblyTypes.Where(t => t.GetCustomAttribute<RepositoryTargetAttribute>() is not null))
         {
             Type interfaceType = typeof(IDatabaseRepository<>).MakeGenericType(entityType);
             Type repositoryType = typeof(DatabaseRepository<>).MakeGenericType(entityType);
@@ -29,35 +30,32 @@ public class Startup
             services.AddScoped(interfaceType, repositoryType);
         }
 
-        ///!TODO: Look for way to generalize this, possible for loop with an interface that the attributes implement ?
-        // Lazy Create ViewModel mapper generation
-        foreach(Type createMapperDestinationType in assemblyTypes.Where(t => t.GetCustomAttribute<EntityCreateViewMapTargetAttribute>() is not null))
+        // Lazy create/Update mapper generator for entities
+        Tuple<System.Type, Tuple<Type, Type>>[] mapGenerators = new Tuple<System.Type, Tuple<Type, Type>>[]  {
+            new ( typeof(EntityCreateViewMapTargetAttribute), new(typeof(IEntityCreateMapper<,>), typeof(EntityCreateMapper<,>))),
+            new ( typeof(EntityUpdateViewMapTargetAttribute), new(typeof(IEntityUpdateMapper<,>), typeof(EntityUpdateMapper<,>))),
+        };
+
+        foreach (Tuple<System.Type, Tuple<Type, Type>> generatorTypes in mapGenerators)
         {
-            EntityCreateViewMapTargetAttribute? targetAttr = createMapperDestinationType.GetCustomAttribute<EntityCreateViewMapTargetAttribute>();
-
-            if(targetAttr is not null)
+            var (attributeType, mapper) = generatorTypes;
+            if (typeof(IMapperGenerator).IsAssignableFrom(attributeType))
             {
-                Type interfaceType = typeof(IEntityCreateMapper<,>).MakeGenericType(createMapperDestinationType, targetAttr.MapToType);
-                Type createMapperType = typeof(EntityCreateMapper<,>).MakeGenericType(createMapperDestinationType, targetAttr.MapToType);
+                var (interfaceType, mapperType) = mapper;
+                foreach (System.Type assemblyType in assemblyTypes.Where(t => t.GetCustomAttribute(attributeType) is not null))
+                {
+                    Attribute? attribute = assemblyType.GetCustomAttribute(attributeType);
 
-                services.AddSingleton(interfaceType, createMapperType);
+                    if (attribute is IMapperGenerator generatorInfo)
+                    {
+                        Type generatorInterface = interfaceType.MakeGenericType(assemblyType, generatorInfo.MapToType);
+                        Type generatorMapper = mapperType.MakeGenericType(assemblyType, generatorInfo.MapToType);
+
+                        services.AddSingleton(generatorInterface, generatorMapper);
+                    }
+                }
             }
         }
-
-        // Lazy Update ViewModel mapper generation
-        foreach(Type updateMapperDestinationType in assemblyTypes.Where(t => t.GetCustomAttribute<EntityUpdateViewMapTargetAttribute>() is not null))
-        {
-            EntityUpdateViewMapTargetAttribute? targetAttr = updateMapperDestinationType.GetCustomAttribute<EntityUpdateViewMapTargetAttribute>();
-
-            if(targetAttr is not null)
-            {
-                Type interfaceType = typeof(IEntityUpdateMapper<,>).MakeGenericType(updateMapperDestinationType, targetAttr.MapToType);
-                Type updateMapperType = typeof(EntityUpdateMapper<,>).MakeGenericType(updateMapperDestinationType, targetAttr.MapToType);
-
-                services.AddSingleton(interfaceType, updateMapperType);
-            }
-        }
-
 
         // Controller / Service initialization
         services.AddControllers();
@@ -65,23 +63,25 @@ public class Startup
     }
 
     public void Configure(
-        IApplicationBuilder app, 
+        IApplicationBuilder app,
         IWebHostEnvironment env,
         IConfiguration configuration
     )
     {
-        if(env.IsDevelopment())
+        if (env.IsDevelopment())
         {
             app.UseDeveloperExceptionPage();
             app.UseSwagger();
-            app.UseSwaggerUI(c => {
+            app.UseSwaggerUI(c =>
+            {
                 c.SwaggerEndpoint("./swagger/v1/swagger.json", configuration["API_NAME"]);
                 c.RoutePrefix = String.Empty;
             });
         }
 
         app.UseRouting();
-        app.UseEndpoints(endpoints => {
+        app.UseEndpoints(endpoints =>
+        {
             endpoints.MapControllers();
             // endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}");
         });
