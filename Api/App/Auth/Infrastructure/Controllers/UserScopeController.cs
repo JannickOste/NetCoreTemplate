@@ -5,6 +5,7 @@ using App.Core.Domain.Database;
 using App.Core.Domain.Mappers.Entity;
 using App.Core.Domain.ViewModels.Default;
 using App.Auth.Domain.Models.User;
+using App.Auth.Domain.ViewModels.UserScope;
 
 namespace App.Core.Infrastructure.Controllers;
 
