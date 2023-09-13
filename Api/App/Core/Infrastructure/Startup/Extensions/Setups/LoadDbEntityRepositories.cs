@@ -6,7 +6,7 @@ using App.Core.Infrastructure.Database;
 
 namespace App.Core.Infrastructure.Startup.Helpers.Generators;
 
-public class LoadDbEntityRepositories : IStartupHelper
+public class LoadDbEntityRepositories : IStartupSetup
 {
     public void Load(IServiceCollection services, IEnumerable<Type> assemblyTypes)
     {

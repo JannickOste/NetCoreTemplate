@@ -1,6 +1,6 @@
 namespace App.Core.Domain.Startup; 
 
-public interface IStartupHelper 
+public interface IStartupSetup 
 {
     void Load(IServiceCollection services, IEnumerable<Type> assemblyTypes);
 }

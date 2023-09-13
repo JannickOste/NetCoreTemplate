@@ -1,5 +1,3 @@
-using System.Reflection;
-using App.Core.Domain.Startup;
 using App.Core.Infrastructure.Database;
 
 namespace App.Core.Infrastructure.Startup;
@@ -12,22 +10,7 @@ public class Startup
     {
         services.AddDbContext<DatabaseContext>();
 
-
-        Type startupHelperInterfaceType = typeof(IStartupHelper);
-        Type[] assemblyTypes = Assembly.GetExecutingAssembly().GetTypes();
-        foreach(Type assemblyType in assemblyTypes)
-        {
-            if(assemblyType.Equals(startupHelperInterfaceType)) continue;
-            if(startupHelperInterfaceType.IsAssignableFrom(assemblyType))
-            {
-                
-                IStartupHelper? helper = Activator.CreateInstance(assemblyType) as IStartupHelper;
-                if(helper is not null)
-                {
-                    helper.Load(services, assemblyTypes);
-                }
-            }
-        }
+        SetupServicesMiddleware.Invoke(services);
 
         services.AddControllers();
         services.AddSwaggerGen();
@@ -39,17 +22,7 @@ public class Startup
         IConfiguration configuration
     )
     {
-        if (env.IsDevelopment())
-        {
-            app.UseDeveloperExceptionPage();
-            app.UseSwagger();
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("./swagger/v1/swagger.json", configuration["API_NAME"]);
-                c.RoutePrefix = String.Empty;
-            });
-        }
-
+        ConfigureServicesMiddleware.Invoke(app, env);
         app.UseHttpsRedirection();
 
         // app.UseIdentityServer();

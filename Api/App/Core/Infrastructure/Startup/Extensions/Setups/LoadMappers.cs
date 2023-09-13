@@ -6,8 +6,8 @@ using App.Core.Infrastructure.Mappers;
 
 namespace App.Core.Infrastructure.Startup.Helpers.Generators;
 
-[StartupHelperOptions]
-public class LoadMappers : IStartupHelper
+[StartupSetupOptions]
+public class LoadMappers : IStartupSetup
 {
     private struct GeneratorType 
     {
