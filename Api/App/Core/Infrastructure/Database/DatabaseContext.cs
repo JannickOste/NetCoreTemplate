@@ -1,4 +1,3 @@
-using Api.Migrations;
 using Microsoft.EntityFrameworkCore;
 namespace App.Core.Infrastructure.Database;
 
