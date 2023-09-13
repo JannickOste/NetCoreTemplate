@@ -52,7 +52,7 @@ public class Startup
 
         app.UseHttpsRedirection();
 
-        app.UseIdentityServer();
+        // app.UseIdentityServer();
         app.UseRouting();
         app.UseAuthentication();
         app.UseAuthorization();

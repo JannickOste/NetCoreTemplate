@@ -29,13 +29,13 @@ public class LoadMappers : IStartupHelper
     {
         foreach (GeneratorType generatorType in this.generatorTypes)
         {
-            if (typeof(IMapperGenerator).IsAssignableFrom(generatorType.Attribute))
+            if (typeof(ISetEntityRemapperAttribute).IsAssignableFrom(generatorType.Attribute))
             {
                 foreach (System.Type assemblyType in assemblyTypes.Where(t => t.GetCustomAttribute(generatorType.Attribute) is not null))
                 {
                     Attribute? attribute = assemblyType.GetCustomAttribute(generatorType.Attribute);
 
-                    if (attribute is IMapperGenerator generatorInfo)
+                    if (attribute is ISetEntityRemapperAttribute generatorInfo)
                     {
                         Type generatorInterface = generatorType.Interface.MakeGenericType(assemblyType, generatorInfo.MapToType);
                         Type generatorMapper = generatorType.Implementation.MakeGenericType(assemblyType, generatorInfo.MapToType);
