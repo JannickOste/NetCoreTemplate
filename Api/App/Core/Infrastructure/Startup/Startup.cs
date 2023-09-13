@@ -1,16 +1,9 @@
 using System.Reflection;
-using App.Core.Domain.Authentication;
 using App.Core.Domain.Startup;
-using App.Core.Infrastructure.Authorization;
 using App.Core.Infrastructure.Database;
 
-namespace NetCore.Infrastructure.Startup;
+namespace App.Core.Infrastructure.Startup;
 
-/**
-* @author: Oste Jannick
-* @description: The startup configuration where all your dependencies configuration and injection occurs.
-* @Date: 2023-09-11
-*/
 public class Startup
 {
     public void ConfigureServices(
@@ -56,6 +49,8 @@ public class Startup
                 c.RoutePrefix = String.Empty;
             });
         }
+
+        app.UseHttpsRedirection();
 
         app.UseIdentityServer();
         app.UseRouting();

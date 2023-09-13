@@ -9,8 +9,9 @@ public class DatabaseRepository<TEntity> : IDatabaseRepository<TEntity> where TE
     private readonly DatabaseContext context;
     private readonly DbSet<TEntity> entities;
 
-    public DatabaseRepository(DatabaseContext context)
-    {
+    public DatabaseRepository(
+        DatabaseContext context
+    ) {
         this.context = context;
         this.entities = context.Set<TEntity>();
     }

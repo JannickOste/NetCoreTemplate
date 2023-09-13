@@ -1,15 +1,17 @@
-using App.Core.Domain.Entities.User;
+using Api.Migrations;
 using Microsoft.EntityFrameworkCore;
 namespace App.Core.Infrastructure.Database;
 
 public class DatabaseContext : DbContext
 {
-    public DbSet<User> Users {get; set;}
     private readonly IConfiguration configuration;
     private readonly IWebHostEnvironment enviroment;
 
-    public DatabaseContext(DbContextOptions<DatabaseContext> options, IConfiguration configuration, IWebHostEnvironment enviroment) : base(options)
-    {
+    public DatabaseContext(
+        DbContextOptions<DatabaseContext> options, 
+        IConfiguration configuration, 
+        IWebHostEnvironment enviroment
+    ) : base(options) {
         this.configuration = configuration;
         this.enviroment = enviroment;
 
