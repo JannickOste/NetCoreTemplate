@@ -52,7 +52,7 @@ public class UserScopeController : Controller
 
             return Ok(new UserScopeDetailViewModel()
             {
-                userScope = userScope
+                UserScope = userScope
             });
         }
         catch (Exception ex)
@@ -71,7 +71,7 @@ public class UserScopeController : Controller
         {
             return Ok(new UserScopeListViewModel()
             {
-                userScopes = this.repository.GetAll()
+                UserScopes = this.repository.GetAll()
             });
 
         }
@@ -100,7 +100,7 @@ public class UserScopeController : Controller
 
             return Ok(new UserScopeDetailViewModel()
             {
-                userScope = target
+                UserScope = target
             });
         }
         catch (Exception ex)
@@ -133,7 +133,7 @@ public class UserScopeController : Controller
         this.repository.Update(updatedUser);
 
         return Ok(new UserScopeDetailViewModel(){
-            userScope = updatedUser
+            UserScope = updatedUser
         });
     }
     
