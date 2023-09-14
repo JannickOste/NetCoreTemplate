@@ -6,6 +6,7 @@ using App.Core.Domain.Mappers.Entity;
 using App.Core.Domain.ViewModels.Default;
 using App.Auth.Domain.ViewModels.User;
 using App.Auth.Domain.User;
+using Microsoft.AspNetCore.Authorization;
 
 namespace App.Auth.Infrastructure.Controllers;
 

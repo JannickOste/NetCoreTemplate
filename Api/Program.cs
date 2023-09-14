@@ -9,7 +9,7 @@ using System.Net;
 await Host.CreateDefaultBuilder(args).ConfigureWebHostDefaults(
     config => config
     .UseStartup<App.Core.Infrastructure.Startup.Startup>()
-        .UseUrls("https://localhost:6001") // Change the port if needed
+        .UseUrls("https://192.168.1.40:6001") // Change the port if needed
         .UseKestrel(options =>
         {
             options.Listen(IPAddress.Loopback, 6001, listenOptions =>
