@@ -6,8 +6,8 @@ using App.Core.Infrastructure.Mappers;
 
 namespace App.Core.Infrastructure.Startup.Helpers.Generators;
 
-[StartupHelperOptions]
-public class LoadMappers : IStartupHelper
+[StartupSetupOptions]
+public class LoadMappers : IStartupSetup
 {
     private struct GeneratorType 
     {
@@ -31,7 +31,7 @@ public class LoadMappers : IStartupHelper
         {
             if (typeof(ISetEntityRemapperAttribute).IsAssignableFrom(generatorType.Attribute))
             {
-                foreach (System.Type assemblyType in assemblyTypes.Where(t => t.GetCustomAttribute(generatorType.Attribute) is not null))
+                foreach (Type assemblyType in assemblyTypes.Where(t => t.GetCustomAttribute(generatorType.Attribute) is not null))
                 {
                     Attribute? attribute = assemblyType.GetCustomAttribute(generatorType.Attribute);
 

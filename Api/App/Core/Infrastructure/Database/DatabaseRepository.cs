@@ -4,7 +4,8 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace App.Core.Infrastructure.Database;
 
-public class DatabaseRepository<TEntity> : IDatabaseRepository<TEntity> where TEntity : class
+public class DatabaseRepository<TEntity> 
+            : IDatabaseRepository<TEntity> where TEntity : class
 {
     private readonly DatabaseContext context;
     private readonly DbSet<TEntity> entities;
