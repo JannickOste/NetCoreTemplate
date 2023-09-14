@@ -132,3 +132,15 @@ public class ProductController : Controller
 With these steps, you have set up the foundation for managing products in your project. You can now create, retrieve, update, and delete products using the provided structure and dependency injection.
 
 Feel free to expand upon this foundation to build a complete product management system tailored to your specific requirements.
+
+## Optional Setups
+
+### Setup Services Middleware (Startup: ConfigureServices)
+
+Middleware class responsible for invoking setup methods for services during startup. It scans for types that implement the `IStartupSetup` interface and calls the `Load` method to register services in the DI container.
+
+### Configure Services Middleware (Startup: Configure)
+
+Middleware class responsible for invoking startup configuration methods. It scans for types that implement the `IStartupConfigurator` interface and calls the `Configure` method to set up application services and configurations.
+
+
