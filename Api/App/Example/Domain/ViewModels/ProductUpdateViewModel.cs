@@ -1,4 +1,3 @@
-using System.ComponentModel.DataAnnotations;
 using App.Core.Domain.Mappers.Entity;
 using App.Example.Domain.Models;
 
