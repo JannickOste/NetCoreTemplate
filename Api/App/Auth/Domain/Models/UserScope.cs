@@ -2,7 +2,7 @@ using App.Core.Domain.Database;
 
 namespace App.Auth.Domain.Models.User;
 
-[DbEntity]
+[DbEntity(typeof(UserScope))]
 public class UserScope 
 {
     public int Id{get; set;}

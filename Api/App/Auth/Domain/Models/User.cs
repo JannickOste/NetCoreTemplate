@@ -4,7 +4,7 @@ using App.Auth.Domain.Models.User;
 
 namespace App.Auth.Domain.User;
 
-[DbEntity]
+[DbEntity(typeof(User))]
 [PrimaryKey("Id")]
 public class User : IUser
 {
