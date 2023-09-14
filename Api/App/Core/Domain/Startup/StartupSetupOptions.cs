@@ -1,19 +1,28 @@
 namespace App.Core.Domain.Startup; 
 
+/// <summary>
+/// Attribute class for specifying startup setup options.
+/// </summary>
 public class StartupSetupOptions : Attribute  
 {
-    private readonly bool enabled ;
-    public bool Enabled {get => this.enabled; }
+    /// <summary>
+    /// Gets a value indicating whether the startup setup is enabled.
+    /// </summary>
+    public bool Enabled { get; }
 
-    private readonly int priority = 0;
-    public int Priority {get => this.priority; }
+    /// <summary>
+    /// Gets the priority of the startup setup. Lower values indicate higher priority.
+    /// </summary>
+    public int Priority { get; }
 
-    public StartupSetupOptions(
-        bool enabled = true, 
-        int priority = 100
-    ){
-        this.enabled = enabled;
-        this.priority = priority;
+    /// <summary>
+    /// Initializes a new instance of the <see cref="StartupSetupOptions"/> class.
+    /// </summary>
+    /// <param name="enabled">Whether the startup setup is enabled. (Default is true)</param>
+    /// <param name="priority">The priority of the startup setup. Lower values indicate higher priority. (Default is 100)</param>
+    public StartupSetupOptions(bool enabled = true, int priority = 100)
+    {
+        Enabled = enabled;
+        Priority = priority;
     }
 }
-

@@ -31,7 +31,7 @@ public class LoadMappers : IStartupSetup
         {
             if (typeof(ISetEntityRemapperAttribute).IsAssignableFrom(generatorType.Attribute))
             {
-                foreach (System.Type assemblyType in assemblyTypes.Where(t => t.GetCustomAttribute(generatorType.Attribute) is not null))
+                foreach (Type assemblyType in assemblyTypes.Where(t => t.GetCustomAttribute(generatorType.Attribute) is not null))
                 {
                     Attribute? attribute = assemblyType.GetCustomAttribute(generatorType.Attribute);
 
