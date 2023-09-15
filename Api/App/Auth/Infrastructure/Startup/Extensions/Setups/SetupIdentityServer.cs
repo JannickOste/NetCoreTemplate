@@ -4,7 +4,7 @@ namespace App.Auth.Infrastructure.Startup.Extensions.Setups;
 
 public class SetupIdentityServer : IStartupSetup
 {
-    public void Load(IServiceCollection services, IEnumerable<Type> assemblyTypes)
+    public void ConfigureService(IServiceCollection services, IEnumerable<Type> assemblyTypes)
     {
         services.AddIdentityServer()
                 .AddDeveloperSigningCredential()
