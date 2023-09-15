@@ -1,8 +1,19 @@
 version: '3'
 services:
-  webapp:
+  api:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: DockerFile
     ports:
-      - "80:80"
+      - "443:443"
+    depends_on:
+      - db
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      AuthServer__Authority: https://localhost:443
+    expose:
+      - 443
+  db:
+    image: mariadb:latest
+    environment:
+      MARIADB_ROOT_PASSWORD: 12345
