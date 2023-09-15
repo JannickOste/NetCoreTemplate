@@ -1,5 +1,3 @@
-using App.Core.Infrastructure.Database;
-
 namespace App.Core.Infrastructure.Startup;
 
 public class Startup
