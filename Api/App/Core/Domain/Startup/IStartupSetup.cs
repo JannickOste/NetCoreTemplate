@@ -10,5 +10,5 @@ public interface IStartupSetup
     /// </summary>
     /// <param name="services">The service collection to configure services.</param>
     /// <param name="assemblyTypes">The types from the assembly to be used for setup.</param>
-    void Load(IServiceCollection services, IEnumerable<Type> assemblyTypes);
+    void ConfigureService(IServiceCollection services, IEnumerable<Type> assemblyTypes);
 }
