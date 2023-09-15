@@ -13,7 +13,7 @@ public class StartupSetupOptions : Attribute
     public bool Enabled { get; }
 
     /// <summary>
-    /// Gets the priority of the startup setup. Lower values indicate higher priority.
+    /// Gets the priority of the startup setup.
     /// </summary>
     public byte Priority { get; }
 
