@@ -21,7 +21,8 @@ public class ConfigureServicesMiddleware
                                               {
                                                   classType = t,
                                                   startupSetupOptions = t.GetCustomAttribute<StartupSetupOptions>()
-                                              });
+                                              })
+                                              .OrderByDescending(info => info.startupSetupOptions?.Priority ?? 0);
     }
 
     /// <summary>
@@ -34,7 +35,7 @@ public class ConfigureServicesMiddleware
         foreach (ConfigureServiceInformation info in ConfigureServices)
         {
             if (!info.startupSetupOptions?.Enabled ?? false) continue;
-
+            
             if (Activator.CreateInstance(info.classType) is IStartupConfigurator configurator)
             {
                 configurator.Configure(app, env);
