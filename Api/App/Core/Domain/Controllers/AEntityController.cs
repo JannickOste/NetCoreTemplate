@@ -7,12 +7,6 @@ using App.Core.Domain.ViewModels.Default;
 
 namespace App.Core.Domain.Controllers;
 
-/// <summary>
-/// Generic CRUD controller for managing entities.
-/// </summary>
-/// <typeparam name="TEntity">The type of entity this controller manages.</typeparam>
-/// <typeparam name="TCreateViewModel">The view model for entity creation.</typeparam>
-/// <typeparam name="TUpdateViewModel">The view model for entity updates.</typeparam>
 [Route("[controller]")]
 public abstract class AEntityController<TEntity, TCreateViewModel, TUpdateViewModel> : Controller
     where TEntity : class

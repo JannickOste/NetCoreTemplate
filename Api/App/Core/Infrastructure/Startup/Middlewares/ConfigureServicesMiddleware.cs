@@ -6,6 +6,24 @@ using App.Core.Domain.Startup;
 /// </summary>
 public class ConfigureServicesMiddleware
 {
+    private struct ConfigureServiceInformation
+    {
+        public Type classType;
+        public StartupSetupOptions? startupSetupOptions;
+    }
+
+    private static IEnumerable<ConfigureServiceInformation> ConfigureServices
+    {
+        get => Assembly.GetExecutingAssembly().GetTypes()
+                                              .Where(t => typeof(IStartupConfigurator).IsAssignableFrom(t)
+                                                            && !t.Equals(typeof(IStartupConfigurator)))
+                                              .Select(t => new ConfigureServiceInformation()
+                                              {
+                                                  classType = t,
+                                                  startupSetupOptions = t.GetCustomAttribute<StartupSetupOptions>()
+                                              });
+    }
+
     /// <summary>
     /// Invokes startup configuration methods for registered startup configurators.
     /// </summary>
@@ -13,18 +31,13 @@ public class ConfigureServicesMiddleware
     /// <param name="env">The web host environment.</param>
     public static void Invoke(IApplicationBuilder app, IWebHostEnvironment env)
     {
-        Type startupConfigurationInterfaceType = typeof(IStartupConfigurator);
-        Type[] assemblyTypes = Assembly.GetExecutingAssembly().GetTypes();
-
-        foreach (Type assemblyType in assemblyTypes)
+        foreach (ConfigureServiceInformation info in ConfigureServices)
         {
-            if (assemblyType.Equals(startupConfigurationInterfaceType)) continue;
-            if (startupConfigurationInterfaceType.IsAssignableFrom(assemblyType))
+            if (!info.startupSetupOptions?.Enabled ?? false) continue;
+
+            if (Activator.CreateInstance(info.classType) is IStartupConfigurator configurator)
             {
-                if (Activator.CreateInstance(assemblyType) is IStartupConfigurator configurator)
-                {
-                    configurator.Configure(app, env);
-                }
+                configurator.Configure(app, env);
             }
         }
     }

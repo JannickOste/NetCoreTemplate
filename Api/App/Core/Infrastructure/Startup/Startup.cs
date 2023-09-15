@@ -6,15 +6,7 @@ public class Startup
 {
     public void ConfigureServices(
         IServiceCollection services
-    )
-    {
-        services.AddDbContext<DatabaseContext>();
-
-        SetupServicesMiddleware.Invoke(services);
-
-        services.AddControllers();
-        services.AddSwaggerGen();
-    }
+    ) =>  SetupServicesMiddleware.Invoke(services);
 
     public void Configure(
         IApplicationBuilder app,
