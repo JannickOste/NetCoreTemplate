@@ -15,4 +15,7 @@ RUN dotnet publish -c release -o /app
 FROM mcr.microsoft.com/dotnet/aspnet:7.0
 WORKDIR /app
 COPY --from=build /app ./
-ENTRYPOINT ["dotnet", "Api.dll"]
+
+COPY ./Sysadmin ./Sysadmin
+RUN bash ./Sysadmin/Docker/Setup
+ENTRYPOINT ["bash", "./Sysadmin/Docker/Start"]
