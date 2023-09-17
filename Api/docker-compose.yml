@@ -1,8 +1,23 @@
+# !TODO: Move cert loading to dockerfile
+
 version: '3'
 services:
-  webapp:
+  api:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Sysadmin/DockerFile
     ports:
       - "80:80"
+      - "443:443"
+    depends_on:
+      - db
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: https://+:443;http://+:80
+      ASPNETCORE_HTTPS_PORT: 443
+      ASPNETCORE_Kestrel__Certificates__Default__Path: /app/Sysadmin/Certs/mycert.pfx
+      ASPNETCORE_Kestrel__Certificates__Default__Password: password
+  db:
+    image: mariadb:latest
+    environment:
+      MARIADB_ROOT_PASSWORD: 12345

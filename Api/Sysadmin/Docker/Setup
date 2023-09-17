@@ -1,0 +1,4 @@
+#!/bin/bash
+
+cp /app/Sysadmin/Certs/*.crt /usr/local/share/ca-certificates/
+update-ca-certificates
