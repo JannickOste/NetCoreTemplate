@@ -1,21 +1,27 @@
-# https://hub.docker.com/_/microsoft-dotnet-core
-FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
-WORKDIR /source
 
-# copy csproj and restore as distinct layers
-COPY *.sln .
+# Download the SDK and assign current directory.
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+WORKDIR /src
+
+# Copy csproj configuration and restore data layers. 
 COPY *.csproj .
 RUN dotnet restore
-
-# copy everything else and build app
 COPY . .
-RUN dotnet publish -c release -o /app
 
-# final stage/image
+# Build application
+WORKDIR "/src/."
+RUN dotnet build "Api.csproj" -c Release -o /app/build
+
+# Publish application
+FROM build as publish
+RUN dotnet publish "Api.csproj" -c Release -o /app/publish /p:UseAppHost=false
+
+# Copy required sysadmin files and start application.
 FROM mcr.microsoft.com/dotnet/aspnet:7.0
 WORKDIR /app
-COPY --from=build /app ./
+COPY --from=publish /app/publish ./
 
 COPY ./Sysadmin ./Sysadmin
 RUN bash ./Sysadmin/Docker/Setup
+
 ENTRYPOINT ["bash", "./Sysadmin/Docker/Start"]
