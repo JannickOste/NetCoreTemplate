@@ -475,3 +475,10 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+#keys
+*.pem
+*.csr
+*.key
+*.key
+*/keys
